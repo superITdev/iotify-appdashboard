@@ -55,8 +55,8 @@
 
 <script>
 import { QueryBuilder } from "@cubejs-client/vue"
-import dataQuery from '@/dataQuery'
-import chartOptions from '@/chartOptions'
+import dataQuery from '@/chartData/dataQuery'
+import chartOptions from '@/chartData/chartOptions'
 
 import LaueChart from "@/components/LaueChart"
 

@@ -54,26 +54,25 @@ const staticOptions = {
 
 function toResult(resultSet) {
     let result = [];
-    if (resultSet) {
-        resultSet.tablePivot().forEach((item) => {
-            result.push({
-                name: item['ProductCategories.name'],
-                y: parseInt(item['LineItems.quantity']),
-            });
+    resultSet.tablePivot().forEach((item) => {
+        result.push({
+            name: item['ProductCategories.name'],
+            y: parseInt(item['LineItems.quantity']),
         });
-    }
+    });
     if (!result.length) result = [{ name: '', y: 1180 }];
+
     return result;
 }
 
 function chartOptions(resultSet) {
-    const result = toResult(resultSet);
+    const data = toResult(resultSet);
     const options = {
         ...staticOptions,
         series: [
             {
                 ...staticOptions.series[0],
-                data: result,
+                data,
             },
         ],
     }

@@ -41,9 +41,8 @@ const cubejsApi = cubejs(
 );
 
 import Dashboard from '@/components/Dashboard'
-
+import itemTemplates from '@/chartData'
 import cloneDeep from 'lodash.clonedeep'
-// import debounce from 'lodash.debounce'
 
 export default {
     components: {
@@ -52,37 +51,13 @@ export default {
     data() {
         return {
             cubejsApi,
+            itemTemplates,
             addNewItem: undefined,
-
-            itemTemplates: [
-                {
-                    queryType: 'productsPie',
-                    chartType: 'pie',
-                    name: 'pie for products',
-                },
-                {
-                    // queryType: 'ordersGauge',
-                    queryType: 'productsPie',
-                    chartType: 'basicLine',
-                    name: 'gauge for orders',
-                },
-                {
-                    queryType: 'productsStack',
-                    chartType: 'basicLine',
-                    name: 'stack for products',
-                },
-                {
-                    queryType: 'productsArea',
-                    chartType: 'basicLine',
-                    name: 'area for products',
-                },
-            ],
         }
     },
     methods: {
         onAddNewItem(itemTemplate) {
-            const item = cloneDeep(itemTemplate);
-            this.addNewItem = item;
+            this.addNewItem = cloneDeep(itemTemplate);
         },
     },
 }
