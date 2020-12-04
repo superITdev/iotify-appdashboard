@@ -1,10 +1,14 @@
 ### Download and Import Example Dataset (PostgreSQL)
-Make sure you have a PostgreSQL installed. You can download and import example dataset by running the following commands.
 
+
+### Prepare db(PostgreSQL)
+- Make sure you have a PostgreSQL installed.
+- Confirm database-user of name "postgres" with password "root".
+    For this, we can use "pgAdmin" tool running on browser installed with PostgreSQL.
+- After that, run this commands.
 ```
-$ curl http://cube.dev/downloads/ecom-dump.sql > ecom-dump.sql
-$ createdb ecom
-$ psql --dbname ecom -f ecom-dump.sql
+$ createdb --username=postgres iotifyDB
+$ psql --username=postgres --dbname iotifyDB -f iotifyDB-dump.sql
 ```
 
 ### Backend run

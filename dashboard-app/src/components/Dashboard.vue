@@ -1,11 +1,13 @@
 <template>
     <v-container fluid class="fill-height">
-        <golden-layout class="gl-container">
+        <golden-layout class="gl-container"
+            :showPopoutIcon="false"
+        >
             <gl-row>
                 <gl-component v-for="(item, i) in items" :key="i"
-                    :title='`highcharts-${i}`'
+                    :title='item.name'
                     @destroy="onRemoveItem(item)"
-                    @resize="onResize(`highcharts-${i}`)"
+                    @resize="onResize(`chart-ref-${i}`)"
                 >
                     <query-builder class="fill-height" :cubejsApi="cubejsApi" :query="dataQuery[item.queryType]">
                         <template v-slot="{ loading, resultSet }">
@@ -17,7 +19,7 @@
                                 </div>
                                 <highcharts
                                     class="fill-height"
-                                    :ref="`highcharts-${i}`"
+                                    :ref="`chart-ref-${i}`"
                                     v-if="!loading && resultSet != null"
                                     :options="chartOptions[item.chartType](resultSet)"
                                     :updateArgs="updateArgs"
