@@ -7,7 +7,7 @@
                     :closeable="false"
                     :reorderEnabled="false"
                 >
-                    <query-builder :cubejs-api="cubejsApi" :query="item.query">
+                    <query-builder :cubejsApi="cubejsApi" :query="item.query">
                         <template v-slot="{ loading, resultSet }">
                             <LaueChart
                                 :type="item.chartType"
@@ -22,7 +22,7 @@
                     :title='`highcharts-${i}`'
                     @destroy="onRemoveItem(item)"
                 >
-                    <query-builder :cubejs-api="cubejsApi" :query="item.query">
+                    <query-builder :cubejsApi="cubejsApi" :query="item.query">
                         <template v-slot="{}">
                             <highcharts :options="chartOptions" :updateArgs="updateArgs"/>
                         </template>
