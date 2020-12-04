@@ -16,27 +16,38 @@
             </template>
             <v-list>
                 <v-list-item v-for="(itemTemplate, i) in itemTemplates" :key="i" @click="onAddNewItem(itemTemplate)">
-                    <v-list-item-title>{{ itemTemplate.typeName }}</v-list-item-title>
+                    <v-list-item-title>{{ itemTemplate.name }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
-    </v-app-bar>    
+    </v-app-bar>
     <v-main>
         <v-container fluid class="fill-height">
             <golden-layout class="gl-container">
                 <gl-row>
-                    <gl-component v-for="(item, i) in items" :key="i"
-                        :title='`chart of type-${item.typeName}`'
-                        @destroy="onRemoveItem(item)"
+                    <gl-component v-for="(item, i) in LaueItems" :key="`Laue-${i}`"
+                        :title='`LaueChart-${i}`'
+                        :closeable="false"
+                        :reorderEnabled="false"
                     >
                         <query-builder :cubejs-api="cubejsApi" :query="item.query">
                             <template v-slot="{ loading, resultSet }">
-                                <Chart
-                                    :title='`chart of type-${item.typeName}`'
+                                <LaueChart
                                     :type="item.chartType"
                                     :loading="loading"
                                     :result-set="resultSet"
                                 />
+                            </template>
+                        </query-builder>
+                    </gl-component>
+
+                    <gl-component v-for="(item, i) in items" :key="i"
+                        :title='`highcharts-${i}`'
+                        @destroy="onRemoveItem(item)"
+                    >
+                        <query-builder :cubejs-api="cubejsApi" :query="item.query">
+                            <template v-slot="{}">
+                                <highcharts :options="chartOptions" :updateArgs="updateArgs"/>
                             </template>
                         </query-builder>
                     </gl-component>
@@ -58,31 +69,30 @@ body {
 </style>
 
 <script>
-import cloneDeep from 'lodash.clonedeep'
-// import debounce from 'lodash.debounce'
-
 import cubejs from "@cubejs-client/core";
 import { QueryBuilder } from "@cubejs-client/vue";
-
-import Chart from "./components/Chart";
-
 const cubejsApi = cubejs(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTQ2NjY4OTR9.0fdi5cuDZ2t3OSrPOMoc3B1_pwhnWj4ZmM3FHEX7Aus",
     { apiUrl: "https://ecom.cubecloudapp.dev/cubejs-api/v1" }
 );
 
+import cloneDeep from 'lodash.clonedeep'
+// import debounce from 'lodash.debounce'
+import LaueChart from "./components/LaueChart";
+
+import basicLine from '@/chartData/basicLine.js'
+
 export default {
     components: {
-        Chart,
+        LaueChart,
         QueryBuilder
     },
     data() {
         return {
             cubejsApi,
 
-            itemTemplates: [
+            LaueItems: [
                 {
-                    typeName: 'chart01',
                     chartType: 'line',
                     query: { // sql for dataset
                         measures: ["Users.count"],
@@ -96,8 +106,41 @@ export default {
                     },
                 },
                 {
-                    typeName: 'chart02',
                     chartType: 'stackedBar',
+                    query: { // sql for dataset
+                        measures: ["Orders.count"],
+                        dimensions: ["Orders.status"],
+                        timeDimensions: [
+                            {
+                                dimension: "Orders.createdAt",
+                                dateRange: ["2019-01-01", "2020-12-31"],
+                                granularity: "month"
+                            }
+                        ]
+                    }
+                }
+            ],
+
+            // highcharts
+            updateArgs: [true, true, {duration: 100}],
+            chartOptions: basicLine,
+
+            itemTemplates: [
+                {
+                    name: 'line',
+                    query: { // sql for dataset
+                        measures: ["Users.count"],
+                        timeDimensions: [
+                            {
+                                dimension: "Users.createdAt",
+                                dateRange: ["2019-01-01", "2020-12-31"],
+                                granularity: "month"
+                            }
+                        ]
+                    },
+                },
+                {
+                    name: 'stackedBar',
                     query: { // sql for dataset
                         measures: ["Orders.count"],
                         dimensions: ["Orders.status"],
