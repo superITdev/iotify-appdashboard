@@ -10,7 +10,7 @@
                     <query-builder class="fill-height" :cubejsApi="cubejsApi" :query="dataQuery[item.queryType]">
                         <template v-slot="{ loading, resultSet }">
                             <v-card class="fill-height">
-                                <div v-if="loading" class="d-flex justify-content-center text-dark">
+                                <div v-if="loading" class="fill-height d-flex justify-content-center align-center text-dark">
                                     <div class="spinner-border" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
