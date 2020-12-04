@@ -54,30 +54,9 @@ export default {
             itemTemplates: [
                 {
                     name: 'line',
-                    query: { // sql for dataset
-                        measures: ["Users.count"],
-                        timeDimensions: [
-                            {
-                                dimension: "Users.createdAt",
-                                dateRange: ["2019-01-01", "2020-12-31"],
-                                granularity: "month"
-                            }
-                        ]
-                    },
                 },
                 {
                     name: 'stackedBar',
-                    query: { // sql for dataset
-                        measures: ["Orders.count"],
-                        dimensions: ["Orders.status"],
-                        timeDimensions: [
-                            {
-                                dimension: "Orders.createdAt",
-                                dateRange: ["2019-01-01", "2020-12-31"],
-                                granularity: "month"
-                            }
-                        ]
-                    }
                 }
             ],
         }

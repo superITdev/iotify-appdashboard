@@ -107,7 +107,19 @@ export default {
     watch: {
         addNewItem(itemTemplate) {
             if (!itemTemplate) return;
+            
             const item = cloneDeep(itemTemplate);
+            item.query = { // sql for dataset
+                measures: ["Users.count"],
+                timeDimensions: [
+                    {
+                        dimension: "Users.createdAt",
+                        dateRange: ["2019-01-01", "2020-12-31"],
+                        granularity: "month"
+                    }
+                ]
+            },
+
             this.items.push(item);
         },
     },
