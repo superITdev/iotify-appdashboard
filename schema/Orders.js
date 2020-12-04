@@ -1,31 +1,39 @@
 cube(`Orders`, {
-  sql: `
-  select 1 as id, 100 as amount, 'new' status
-  UNION ALL
-  select 2 as id, 200 as amount, 'new' status
-  UNION ALL
-  select 3 as id, 300 as amount, 'processed' status
-  UNION ALL
-  select 4 as id, 500 as amount, 'processed' status
-  UNION ALL
-  select 5 as id, 600 as amount, 'shipped' status
-  `,
+  sql: `SELECT * FROM public.orders`,
+  joins: {
+    Users: {
+      sql: `${CUBE}.user_id = ${Users}.id`,
+      relationship: `belongsTo`
+    },
+    Products: {
+      sql: `${CUBE}.product_id = ${Products}.id`,
+      relationship: `belongsTo`
+    }
+  },
 
   measures: {
     count: {
       type: `count`
     },
-
     totalAmount: {
-      sql: `amount`,
+      sql: `number`,
       type: `sum`
     }
   },
 
   dimensions: {
+    id: {
+      sql: `id`,
+      type: `number`,
+      primaryKey: true
+    },
     status: {
       sql: `status`,
       type: `string`
+    },
+    createdAt: {
+      sql: `created_at`,
+      type: `time`
     }
   }
 });
