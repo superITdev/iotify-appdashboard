@@ -42,11 +42,7 @@
 
 <script>
 import { QueryBuilder } from "@cubejs-client/vue";
-
-import cloneDeep from 'lodash.clonedeep'
-// import debounce from 'lodash.debounce'
 import LaueChart from "@/components/LaueChart";
-
 import basicLine from '@/chartData/basicLine.js'
 
 export default {
@@ -105,10 +101,9 @@ export default {
         }
     },
     watch: {
-        addNewItem(itemTemplate) {
-            if (!itemTemplate) return;
-            
-            const item = cloneDeep(itemTemplate);
+        addNewItem(item) {
+            if (!item) return;
+
             item.query = { // sql for dataset
                 measures: ["Users.count"],
                 timeDimensions: [

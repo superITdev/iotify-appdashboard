@@ -15,7 +15,7 @@
                 </v-btn>
             </template>
             <v-list>
-                <v-list-item v-for="(itemTemplate, i) in itemTemplates" :key="i" @click="addNewItem = itemTemplate">
+                <v-list-item v-for="(itemTemplate, i) in itemTemplates" :key="i" @click="onAddNewItem(itemTemplate)">
                     <v-list-item-title>{{ itemTemplate.name }}</v-list-item-title>
                 </v-list-item>
             </v-list>
@@ -42,6 +42,9 @@ const cubejsApi = cubejs(
 
 import Dashboard from '@/components/Dashboard'
 
+import cloneDeep from 'lodash.clonedeep'
+// import debounce from 'lodash.debounce'
+
 export default {
     components: {
         Dashboard,
@@ -55,11 +58,14 @@ export default {
                 {
                     name: 'line',
                 },
-                {
-                    name: 'stackedBar',
-                }
             ],
         }
+    },
+    methods: {
+        onAddNewItem(itemTemplate) {
+            const item = cloneDeep(itemTemplate);
+            this.addNewItem = item;
+        },
     },
 }
 </script>
