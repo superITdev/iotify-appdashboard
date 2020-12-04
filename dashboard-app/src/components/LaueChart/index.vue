@@ -31,12 +31,10 @@ export default {
   computed: {
     values: function() {
       if (this.loading || !this.resultSet) return undefined;
-      // console.log("chartPivot", this.resultSet.chartPivot());
       return this.resultSet.chartPivot();
     },
     metrics: function() {
       if (this.loading || !this.resultSet) return undefined;
-      // console.log("seriesNames", this.resultSet.seriesNames());
       return this.resultSet.seriesNames().map(x => x.key);
     },
     resultVisible() {

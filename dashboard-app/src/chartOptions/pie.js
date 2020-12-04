@@ -4,7 +4,7 @@ const staticOptions = {
         plotBorderWidth: null,
         plotShadow: false,
         type: 'pie',
-        styledMode: true,
+        styledMode: false,
         spacingRight: 20,
         spacingLeft: 20,
         spacingBottom: 20,
@@ -21,25 +21,25 @@ const staticOptions = {
     },
     accessibility: {
         point: {
-        valueSuffix: '',
+            valueSuffix: '',
         },
     },
     plotOptions: {
         pie: {
-        shadow: false,
-        center: ['50%', '50%'],
-        colors: [
-            '#45446F',
-            '#BE3D7F',
-            '#FF6492',
-            '#FF93A8',
-            '#FFC3BA',
-            '#FFEAE4',
-            '#DFD7FF',
-            '#B5ACFF',
-            '#7A77FF',
-            '#5251C9',
-        ],
+            shadow: false,
+            center: ['50%', '50%'],
+            colors: [
+                '#45446F',
+                '#BE3D7F',
+                '#FF6492',
+                '#FF93A8',
+                '#FFC3BA',
+                '#FFEAE4',
+                '#DFD7FF',
+                '#B5ACFF',
+                '#7A77FF',
+                '#5251C9',
+            ],
         },
     },
     series: [
@@ -77,7 +77,6 @@ function chartOptions(resultSet) {
             },
         ],
     }
-    console.log(options);
     return options;
 }
 
