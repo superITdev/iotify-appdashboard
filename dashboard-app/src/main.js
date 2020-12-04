@@ -1,6 +1,5 @@
 import Vue from 'vue'
 
-// import App from './App0.vue'
 import App from './App.vue'
 
 import vuetify from './plugins/vuetify'
@@ -11,10 +10,6 @@ import store from './store'
 import vgl from 'vue-golden-layout'
 import 'golden-layout/src/css/goldenlayout-light-theme.css'
 Vue.use(vgl);
-
-// laue chart
-import { Laue } from 'laue'
-Vue.use(Laue);
 
 // highcharts
 import HighchartsVue from 'highcharts-vue'
