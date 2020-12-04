@@ -8,6 +8,7 @@
                     :title='item.name'
                     @destroy="onRemoveItem(item)"
                     @resize="onResize(`chart-ref-${i}`)"
+                    :closable="false"
                 >
                     <query-builder class="fill-height" :cubejsApi="cubejsApi" :query="dataQuery[item.queryType]">
                         <template v-slot="{ loading, resultSet }">
