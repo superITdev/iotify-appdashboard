@@ -22,9 +22,22 @@
                     :title='`highcharts-${i}`'
                     @destroy="onRemoveItem(item)"
                 >
-                    <query-builder :cubejsApi="cubejsApi" :query="item.query">
-                        <template v-slot="{}">
-                            <highcharts :options="chartOptions" :updateArgs="updateArgs"/>
+                    <query-builder :cubejsApi="cubejsApi" :query="dataQuery[item.queryType]">
+                        <template v-slot="{ loading, resultSet }">
+                            <v-card>
+                                <v-card-text>
+                                    <div v-if="loading" class="d-flex justify-content-center text-dark">
+                                        <div class="spinner-border" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <highcharts
+                                        v-if="!loading && resultSet != null"
+                                        :options="chartOptions[item.chartType](resultSet)"
+                                        :updateArgs="updateArgs"
+                                    />
+                                </v-card-text>
+                            </v-card>
                         </template>
                     </query-builder>
                 </gl-component>
@@ -41,9 +54,11 @@
 </style>
 
 <script>
-import { QueryBuilder } from "@cubejs-client/vue";
-import LaueChart from "@/components/LaueChart";
-import basicLine from '@/chartData/basicLine.js'
+import { QueryBuilder } from "@cubejs-client/vue"
+import dataQuery from '@/dataQuery'
+import chartOptions from '@/chartOptions'
+
+import LaueChart from "@/components/LaueChart"
 
 export default {
     props: [
@@ -56,6 +71,14 @@ export default {
     },
     data() {
         return {
+            dataQuery,
+            items: [],
+            
+            // highcharts
+            chartOptions,
+            updateArgs: [true, true, {duration: 100}],
+
+            // laue chart
             LaueItems: [
                 {
                     chartType: 'line',
@@ -85,12 +108,6 @@ export default {
                     }
                 }
             ],
-
-            // highcharts
-            updateArgs: [true, true, {duration: 100}],
-            chartOptions: basicLine,
-
-            items: [],
         }
     },
     methods: {
@@ -103,18 +120,6 @@ export default {
     watch: {
         addNewItem(item) {
             if (!item) return;
-
-            item.query = { // sql for dataset
-                measures: ["Users.count"],
-                timeDimensions: [
-                    {
-                        dimension: "Users.createdAt",
-                        dateRange: ["2019-01-01", "2020-12-31"],
-                        granularity: "month"
-                    }
-                ]
-            },
-
             this.items.push(item);
         },
     },

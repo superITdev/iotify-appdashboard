@@ -56,7 +56,25 @@ export default {
 
             itemTemplates: [
                 {
-                    name: 'line',
+                    queryType: 'productsPie',
+                    chartType: 'pie',
+                    name: 'pie for products',
+                },
+                {
+                    // queryType: 'ordersGauge',
+                    queryType: 'productsPie',
+                    chartType: 'basicLine',
+                    name: 'gauge for orders',
+                },
+                {
+                    queryType: 'productsStack',
+                    chartType: 'basicLine',
+                    name: 'stack for products',
+                },
+                {
+                    queryType: 'productsArea',
+                    chartType: 'basicLine',
+                    name: 'area for products',
                 },
             ],
         }

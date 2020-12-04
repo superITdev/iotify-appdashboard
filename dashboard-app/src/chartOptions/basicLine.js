@@ -1,4 +1,4 @@
-export default {
+const staticOptions = {
     title: {
         text: 'Solar Employment Growth by Sector, 2010-2016'
     },
@@ -66,3 +66,9 @@ export default {
         }]
     }
 }
+
+function chartOptions() {
+    return staticOptions;
+}
+
+export default chartOptions;
