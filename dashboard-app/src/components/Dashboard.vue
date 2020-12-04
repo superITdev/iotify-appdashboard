@@ -5,22 +5,23 @@
                 <gl-component v-for="(item, i) in items" :key="i"
                     :title='`highcharts-${i}`'
                     @destroy="onRemoveItem(item)"
+                    @resize="onResize(`highcharts-${i}`)"
                 >
-                    <query-builder :cubejsApi="cubejsApi" :query="dataQuery[item.queryType]">
+                    <query-builder class="fill-height" :cubejsApi="cubejsApi" :query="dataQuery[item.queryType]">
                         <template v-slot="{ loading, resultSet }">
-                            <v-card>
-                                <v-card-text>
-                                    <div v-if="loading" class="d-flex justify-content-center text-dark">
-                                        <div class="spinner-border" role="status">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
+                            <v-card class="fill-height">
+                                <div v-if="loading" class="d-flex justify-content-center text-dark">
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">Loading...</span>
                                     </div>
-                                    <highcharts
-                                        v-if="!loading && resultSet != null"
-                                        :options="chartOptions[item.chartType](resultSet)"
-                                        :updateArgs="updateArgs"
-                                    />
-                                </v-card-text>
+                                </div>
+                                <highcharts
+                                    class="fill-height"
+                                    :ref="`highcharts-${i}`"
+                                    v-if="!loading && resultSet != null"
+                                    :options="chartOptions[item.chartType](resultSet)"
+                                    :updateArgs="updateArgs"
+                                />
                             </v-card>
                         </template>
                     </query-builder>
@@ -65,7 +66,17 @@ export default {
             const idx = this.items.indexOf(item);
             if (0<=idx) this.items.splice(idx, 1);
             else console.assert(false, 'Closed dynamic component is in the array');
-        }
+        },
+        onResize(refChart) {
+            const ref = this.$refs[refChart];
+            if (ref) {
+                const chart = ref[0];
+                const width = chart.$el.clientWidth;
+                const height = chart.$el.clientHeight;
+                const hc = chart.chart;
+                hc.setSize(width, height);
+            }
+        },
     },
     watch: {
         addNewItem(item) {
