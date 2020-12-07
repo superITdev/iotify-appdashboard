@@ -36,8 +36,8 @@ body {
 <script>
 import cubejs from "@cubejs-client/core";
 const cubejsApi = cubejs(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTQ2NjY4OTR9.0fdi5cuDZ2t3OSrPOMoc3B1_pwhnWj4ZmM3FHEX7Aus",
-    { apiUrl: "https://ecom.cubecloudapp.dev/cubejs-api/v1" }
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJb1RJRlkiOiJJb1RJRlkiLCJ1Ijp7fSwiaWF0IjoxNjA3MzQwODI2fQ.bOzFL1ejdaCE0Fk6gLfcro8MUlzi0MTUOd6NP8HT3ME",
+    { apiUrl: "http://localhost:4000/cubejs-api/v1" }
 );
 
 import Dashboard from '@/components/Dashboard'
